@@ -1,12 +1,30 @@
 package model;
 
-public class Produto {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
+public class Produto {
+	
+	@Id
+	@Column(name = "id_produto")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(nullable = false, length = 100)
 	private String sku;
+	
+	@Column(nullable = false, length = 100)
 	private String nome;
 	private String descricao;
+	
+	@Column(nullable = false)
 	private double preco;
+	
+	@Column(nullable = false)
 	private double quantidade;
 
 	public Long getId() {

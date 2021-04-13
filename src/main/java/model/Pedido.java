@@ -3,12 +3,30 @@ package model;
 import java.util.Date;
 import java.util.List;
 
-public class Pedido {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
+public class Pedido {
+	
+	@Id
+	@Column(name = "id_pedido")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(nullable = false)
 	private List<Cliente> cliente;
+	
+	@Column(nullable = false)
 	private Long totalCompra;
+	
+	@Column(nullable = false)
 	private Date dataCompra;
+	
+	@Column(nullable = false)
 	private List<Produto> produto;
 
 	public Long getId() {
