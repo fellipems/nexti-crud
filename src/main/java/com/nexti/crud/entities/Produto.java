@@ -1,4 +1,4 @@
-package model;
+package com.nexti.crud.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +10,6 @@ import javax.persistence.Id;
 public class Produto {
 	
 	@Id
-	@Column(name = "id_produto")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
@@ -19,6 +18,8 @@ public class Produto {
 	
 	@Column(nullable = false, length = 100)
 	private String nome;
+	
+	@Column(nullable = false, length = 100)
 	private String descricao;
 	
 	@Column(nullable = false)

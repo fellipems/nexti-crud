@@ -1,4 +1,4 @@
-package model;
+package com.nexti.crud.entities;
 
 import java.util.Date;
 
@@ -12,7 +12,6 @@ import javax.persistence.Id;
 public class Cliente {
 	
 	@Id
-	@Column(name = "id_cliente")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	

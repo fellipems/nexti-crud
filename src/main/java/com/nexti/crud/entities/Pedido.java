@@ -1,7 +1,6 @@
-package model;
+package com.nexti.crud.entities;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,12 +12,8 @@ import javax.persistence.Id;
 public class Pedido {
 	
 	@Id
-	@Column(name = "id_pedido")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(nullable = false)
-	private List<Cliente> cliente;
 	
 	@Column(nullable = false)
 	private Long totalCompra;
@@ -26,9 +21,12 @@ public class Pedido {
 	@Column(nullable = false)
 	private Date dataCompra;
 	
-	@Column(nullable = false)
-	private List<Produto> produto;
+//	@Column(nullable = false)
+//	private List<Produto> produto;
 
+//	@Column(nullable = false)
+//	private List<Cliente> cliente;
+	
 	public Long getId() {
 		return id;
 	}
@@ -37,13 +35,13 @@ public class Pedido {
 		this.id = id;
 	}
 
-	public List<Cliente> getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(List<Cliente> cliente) {
-		this.cliente = cliente;
-	}
+//	public List<Cliente> getCliente() {
+//		return cliente;
+//	}
+//
+//	public void setCliente(List<Cliente> cliente) {
+//		this.cliente = cliente;
+//	}
 
 	public Long getTotalCompra() {
 		return totalCompra;
@@ -61,11 +59,11 @@ public class Pedido {
 		this.dataCompra = dataCompra;
 	}
 
-	public List<Produto> getProduto() {
-		return produto;
-	}
-
-	public void setProduto(List<Produto> produto) {
-		this.produto = produto;
-	}
+//	public List<Produto> getProduto() {
+//		return produto;
+//	}
+//
+//	public void setProduto(List<Produto> produto) {
+//		this.produto = produto;
+//	}
 }
