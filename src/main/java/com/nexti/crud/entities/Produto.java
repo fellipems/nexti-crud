@@ -1,10 +1,14 @@
 package com.nexti.crud.entities;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Produto {
@@ -27,6 +31,9 @@ public class Produto {
 	
 	@Column(nullable = false)
 	private double quantidade;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "produto")
+    private List<Pedido> pedidos;
 
 	public Long getId() {
 		return id;
@@ -75,4 +82,13 @@ public class Produto {
 	public void setQuantidade(double quantidade) {
 		this.quantidade = quantidade;
 	}
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+	
 }
