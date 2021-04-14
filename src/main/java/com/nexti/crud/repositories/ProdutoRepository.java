@@ -1,4 +1,4 @@
-package com.nexti.crud.repository;
+package com.nexti.crud.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

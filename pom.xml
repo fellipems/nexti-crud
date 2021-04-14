@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.nexti.crud</groupId>
-	<artifactId>nexti.crud</artifactId>
+	<artifactId>nexti-crud</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>nexti.crud</name>
 	<description>CRUD Jr developer test</description>

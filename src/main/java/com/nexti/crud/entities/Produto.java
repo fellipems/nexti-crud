@@ -1,5 +1,6 @@
 package com.nexti.crud.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,29 +12,29 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Produto {
-	
+public class Produto implements Serializable {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false, length = 100)
 	private String sku;
-	
+
 	@Column(nullable = false, length = 100)
 	private String nome;
-	
+
 	@Column(nullable = false, length = 100)
 	private String descricao;
-	
+
 	@Column(nullable = false)
 	private double preco;
-	
+
 	@Column(nullable = false)
 	private double quantidade;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "produto")
-    private List<Pedido> pedidos;
+	private List<Pedido> pedidos;
 
 	public Long getId() {
 		return id;
@@ -90,5 +91,5 @@ public class Produto {
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
-	
+
 }

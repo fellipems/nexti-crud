@@ -1,5 +1,6 @@
 package com.nexti.crud.entities;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 import javax.persistence.Column;
@@ -11,26 +12,26 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Pedido {
-	
+public class Pedido implements Serializable {	// Serializable pra transformar a classe em diferentes tipos de Streams. como por exemplo salva no BD, enviada por JSON
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false)
 	private Long totalCompra;
-	
+
 	@Column(nullable = false)
 	private Instant dataCompra;
-	
+
 	@ManyToOne(optional = false)
-    @JoinColumn(name = "cliente", referencedColumnName = "id")
-    private Cliente cliente;
-	
+	@JoinColumn(name = "cliente", referencedColumnName = "id")
+	private Cliente cliente;
+
 	@ManyToOne(optional = false)
-    @JoinColumn(name = "produto", referencedColumnName = "id")
-    private Produto produto;
-	
+	@JoinColumn(name = "produto", referencedColumnName = "id")
+	private Produto produto;
+
 	public Cliente getCliente() {
 		return cliente;
 	}
