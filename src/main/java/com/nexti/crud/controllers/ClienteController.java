@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.hibernate.annotations.SQLDeleteAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nexti.crud.entities.Cliente;
-import com.nexti.crud.repositories.ClienteRepository;
 import com.nexti.crud.services.ClienteService;
 
 @RestController
@@ -46,11 +44,12 @@ public class ClienteController {
     	return new ResponseEntity<>(cliente, HttpStatus.OK);
     }
     
-//	@PostMapping(path = "/cadastra-cliente")
-//	@ResponseStatus(HttpStatus.CREATED)
-//	public Cliente cadastraCliente(@RequestBody @Valid Cliente cliente) {
-//		return clienteRepository.save(cliente);
-//	}
+	@PostMapping(path = "/cadastrar")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<Cliente> cadastraCliente(@RequestBody @Valid Cliente cliente) {
+		Cliente novoCliente = clienteService.adicionaCliente(cliente);
+		return new ResponseEntity<>(novoCliente, HttpStatus.CREATED);
+	}
     
     @PutMapping("/atualizar")
     public ResponseEntity<Cliente> atualizaCliente(@RequestBody Cliente cliente) {

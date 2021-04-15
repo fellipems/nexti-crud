@@ -20,9 +20,9 @@ public class ClienteService {
 		this.clienteRepository = clienteRepository;
 	}
 	
-//	public Cliente adicionaCliente(Cliente cliente) {
-//		
-//	}
+	public Cliente adicionaCliente(Cliente cliente) {
+		return clienteRepository.save(cliente);
+	}
 	
 	public List<Cliente> todosClientes(){
 		return clienteRepository.findAll();
@@ -34,7 +34,8 @@ public class ClienteService {
 	
 	public Cliente buscaCliente(String nome) {
 		return clienteRepository.findClienteByNome(nome)
-				.orElseThrow(() -> new ClienteNaoEncontradoException("Nenhum usuário encontrado com nome " + nome));
+				.orElseThrow(() -> 
+				new ClienteNaoEncontradoException("Nenhum usuário encontrado com nome " + nome));
 	}
 	
 	public void deletaCliente(Long id) {
