@@ -32,7 +32,7 @@ public class ClienteController {
     	this.clienteService = clienteService;
     }
     
-    @GetMapping("/todos")
+    @GetMapping
     public ResponseEntity<List<Cliente>> getTodosClientes() {
     	List<Cliente> clientes = clienteService.todosClientes();
     	return new ResponseEntity<>(clientes, HttpStatus.OK);

@@ -13,6 +13,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class Cliente implements Serializable {
@@ -23,6 +26,7 @@ public class Cliente implements Serializable {
 	private Long id;
 
 	@Column(nullable = false, length = 100)
+	@NotNull(message = "Nome não pode ser vazio!")
 	private String nome;
 
 	@Column(nullable = false, length = 11)
