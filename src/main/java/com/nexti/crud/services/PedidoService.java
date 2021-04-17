@@ -1,5 +1,6 @@
 package com.nexti.crud.services;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nexti.crud.dto.PedidoDto;
+import com.nexti.crud.dto.ProdutoDto;
 import com.nexti.crud.entities.Pedido;
+import com.nexti.crud.entities.Produto;
 import com.nexti.crud.repositories.PedidoRepository;
 import com.nexti.crud.repositories.ProdutoRepository;
 
@@ -33,18 +36,17 @@ public class PedidoService {
 				.collect(Collectors.toList());
 	}
 	
-//	@Transactional
-//	public PedidoDto insert(PedidoDto dto) {
-//		Pedido pedido = new Pedido(null, dto.g(),
-//				dto.getLatitude(),
-//				dto.getLongitude(),
-//				Instant.now(),
-//				OrderStatus.PENDING);	// pegar o DTO da requisição e salvar no banco. Instanciar um Order a partir do OrderDTO
-//		for (ProdutoDto p : dto.getProdutos()) {	// associar o pedido com os produtos que vieram do DTO, antes de salvar no banco
-//			Produto produto = produtoRepository.getOne(p.getId()); // instancia um produto só que nao vai no banco de dados, criando uma entidade gerenciada pelo JPA para que, quando formos salvar o pedido, ele também salve as associações de quais produtos estão nesse pedido;
-//			pedido.getProdutos().add(produto);
-//		} // for para percorrer todos os produtosDTO e associando cada produto ao pedido
-//		pedido = pedidoRepository.save(pedido);	// o save retorna uma referência para o objeto salvo, por isso associamos uma variável para ele
-//		return new PedidoDto(pedido);
-//	}
+	@Transactional
+	public PedidoDto inserirPedido(PedidoDto dto) {
+		Pedido pedido = new Pedido(null, 
+				dto.getTotalCompra(), 
+				Instant.now(), 
+				dto.getCliente()); // Não bota collections no construtor pois adicionaremos em um for
+		for (ProdutoDto p : dto.getProdutos()) {
+			Produto produto = produtoRepository.getOne(p.getId());
+			pedido.getProdutos().add(produto);
+		}
+		pedido = pedidoRepository.save(pedido);
+		return new PedidoDto(pedido);
+	}
 }

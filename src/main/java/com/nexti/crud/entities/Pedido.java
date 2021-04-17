@@ -2,7 +2,9 @@ package com.nexti.crud.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -44,12 +46,12 @@ public class Pedido implements Serializable {	// Serializable pra transformar a 
 	
 	public Pedido() {}
 	
-	public Pedido(Long id, Long totalCompra, Instant dataCompra, Cliente cliente, Set<Produto> produtos) {
+	public Pedido(Long id, Long totalCompra, Instant dataCompra, Cliente cliente/*, Set<Produto> produtos*/) {
 		this.id = id;
 		this.totalCompra = totalCompra;
 		this.dataCompra = dataCompra;
-		this.cliente = cliente;
-		this.produtos = produtos;
+		this.cliente = cliente;  // Não bota collections no construtor pois adicionaremos em um for
+		//this.produtos = produtos;
 	}
 
 	public Cliente getCliente() {
