@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.nexti.crud.entities.Produto;
 import com.nexti.crud.exceptions.ProdutoNaoEncontradoException;
 import com.nexti.crud.repositories.ProdutoRepository;
 
+@Service
 public class ProdutoService {
 
 	private final ProdutoRepository produtoRepository;

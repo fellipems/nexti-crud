@@ -42,7 +42,6 @@ public class Produto implements Serializable {
 	@OneToMany
 	@JoinColumn(name = "pedido_id", referencedColumnName="id")
 	private List<Pedido> pedidos = new ArrayList<>();
-
 	
 	public Long getId() {
 		return id;
