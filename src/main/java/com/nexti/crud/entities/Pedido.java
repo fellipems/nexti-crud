@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Pedido implements Serializable {	// Serializable pra transformar a classe em diferentes tipos de Streams. como por exemplo salva no BD, enviada por JSON
@@ -26,13 +29,18 @@ public class Pedido implements Serializable {	// Serializable pra transformar a 
 	@Column(nullable = false)
 	private Instant dataCompra;
 
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "cliente", referencedColumnName = "id")
+	@OneToOne
+	@JoinColumn(name = "id", referencedColumnName = "id")
 	private Cliente cliente;
 
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "produto", referencedColumnName = "id")
+//	@ManyToOne
+//	@JoinColumn(name = "produto_id", referencedColumnName="id")
+//	private Set<Produto> produtos = new HashSet<>();  // conjunto. Pq set(não aceita repetição) e não list? não queremos admitir repetições do mesmo produto dentro do mesmo pedido
+	
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidos")
 	private Set<Produto> produtos = new HashSet<>();  // conjunto. Pq set(não aceita repetição) e não list? não queremos admitir repetições do mesmo produto dentro do mesmo pedido
+
 	
 	public Pedido() {}
 	

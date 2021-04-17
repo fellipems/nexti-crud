@@ -12,6 +12,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
@@ -34,7 +38,10 @@ public class Cliente implements Serializable {
 
 	private Date dataNascimento;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
+	@ManyToMany
+	@JoinTable(name = "tb_pedido_produto",
+			joinColumns = @JoinColumn(name = "cliente_id"), // Join columns é a chave estrangeira que referencía a classe onde estou
+			inverseJoinColumns = @JoinColumn(name = "pedido_id")) // a chave estrangeira que vai referenciar a outra tabela, correspondente ao tipo Product
 	private List<Pedido> pedidos = new ArrayList<>();
 
 	public Cliente () {
