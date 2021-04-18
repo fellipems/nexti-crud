@@ -2,6 +2,8 @@ package com.nexti.crud.services;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,13 +34,14 @@ public class ClienteService {
 		return clienteRepository.save(cliente);
 	}
 	
-	public Cliente buscaCliente(String nome) {
-		return clienteRepository.findClienteByNome(nome)
+	public List<Cliente> buscaCliente(String nome) {
+		return clienteRepository.findClienteByNomeContaining(nome)
 				.orElseThrow(() -> 
 				new ClienteNaoEncontradoException("Nenhum usuário encontrado com nome " + nome));
 	}
 	
+	@Transactional
 	public void deletaCliente(Long id) {
-		clienteRepository.deleteClienteById(id);
+		clienteRepository.deleteClienteByid(id);
 	}
 }
