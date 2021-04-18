@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.br.CPF;
@@ -32,10 +33,13 @@ public class Cliente implements Serializable {
 
 	@Column(nullable = false, length = 100)
 	@NotNull(message = "Nome não pode ser vazio!")
+	@NotEmpty(message = "Nome não pode ser vazio!")
 	private String nome;
 
-	@Column(nullable = false, length = 11)
+	@Column(nullable = false, length = 11, unique = true)
 	@CPF
+	@NotNull(message = "CPF não pode ser vazio!")
+	@NotEmpty(message = "CPF não pode ser vazio!")
 	private String cpf;
 	
 	@DateTimeFormat(pattern = "dd/MM/yyyy")

@@ -33,24 +33,17 @@ public class Pedido implements Serializable {	// Serializable pra transformar a 
 	@OneToOne
 	@JoinColumn(name = "id", referencedColumnName = "id")
 	private Cliente cliente;
-
-//	@ManyToOne
-//	@JoinColumn(name = "produto_id", referencedColumnName="id")
-//	private Set<Produto> produtos = new HashSet<>();  // conjunto. Pq set(não aceita repetição) e não list? não queremos admitir repetições do mesmo produto dentro do mesmo pedido
-	
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidos")
 	private Set<Produto> produtos = new HashSet<>();  // conjunto. Pq set(não aceita repetição) e não list? não queremos admitir repetições do mesmo produto dentro do mesmo pedido
-
 	
 	public Pedido() {}
 	
-	public Pedido(Long id, Long totalCompra, Instant dataCompra, Cliente cliente/*, Set<Produto> produtos*/) {
+	public Pedido(Long id, Long totalCompra, Instant dataCompra, Cliente cliente) {
 		this.id = id;
 		this.totalCompra = totalCompra;
 		this.dataCompra = dataCompra;
 		this.cliente = cliente;  // Não bota collections no construtor pois adicionaremos em um for
-		//this.produtos = produtos;
 	}
 
 	public Cliente getCliente() {

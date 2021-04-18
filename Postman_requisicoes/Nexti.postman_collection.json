@@ -104,6 +104,129 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Produto",
+			"item": [
+				{
+					"name": "Cadastrar_produto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"sku\": \"111222\",\r\n    \"nome\": \"Mouse Gamer Sem Fio Logitech G903 LIGHTSPEED\",\r\n    \"descricao\": \"Mouse Gamer Sem Fio Logitech G903 LIGHTSPEED com RGB LIGHTSYNC, Design Ambidestro\",\r\n    \"preco\": 719.98,\r\n    \"quantidade\": 2.0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/produtos/cadastrar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"produtos",
+								"cadastrar"
+							]
+						},
+						"description": "Cadastrar respectivos produtos"
+					},
+					"response": []
+				},
+				{
+					"name": "Procura_todos_produtos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/produtos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"produtos"
+							]
+						},
+						"description": "pesquisa e procura toods os produtos cadastrados"
+					},
+					"response": []
+				},
+				{
+					"name": "Procura_produto_sku",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/produtos/procurar/sku/111222",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"produtos",
+								"procurar",
+								"sku",
+								"111222"
+							]
+						},
+						"description": "Traz produto com um SKU informado"
+					},
+					"response": []
+				},
+				{
+					"name": "Procura_produtos_nome",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/produtos/procurar/Mouse",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"produtos",
+								"procurar",
+								"Mouse"
+							]
+						},
+						"description": "Traz produtos que contenha o nome informado"
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar_produto",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/produtos/deletar/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"produtos",
+								"deletar",
+								"1"
+							]
+						},
+						"description": "deleta produto com respectivo ID informado"
+					},
+					"response": []
+				}
+			],
+			"description": "Requisições para CRUD de Produtos"
 		}
 	]
 }

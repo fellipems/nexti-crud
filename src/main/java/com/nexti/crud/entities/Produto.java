@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Produto implements Serializable {
@@ -21,28 +23,42 @@ public class Produto implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false, length = 100)
+	@Column(nullable = false, length = 100, unique = true)
+	@NotNull(message = "SKU não pode ser vazio!")
+	@NotEmpty(message = "SKU não pode ser vazio!")
 	private String sku;
 
 	@Column(nullable = false, length = 100)
+	@NotNull(message = "Necessário informar um nome para o produto.")
+	@NotEmpty(message = "Necessário informar um nome para o produto.")
 	private String nome;
 
-	@Column(nullable = false, length = 100)
+	@Column(nullable = false, length = 260)
 	private String descricao;
 
 	@Column(nullable = false)
+	@NotNull(message = "Necessário informar um preço.")
 	private double preco;
 
 	@Column(nullable = false)
+	@NotNull(message = "Necessário informar uma quantidade.")
 	private double quantidade;
-
-//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "produtos")
-//	private List<Pedido> pedidos = new ArrayList<>();
 
 	@OneToMany
 	@JoinColumn(name = "pedido_id", referencedColumnName="id")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
+	public Produto() {}
+	
+	public Produto(Long id, String sku, String nome, String descricao, double preco, double quantidade) {
+		this.id = id;
+		this.sku = sku;
+		this.nome = nome;
+		this.descricao = descricao;
+		this.preco = preco;
+		this.quantidade = quantidade;
+	}
+
 	public Long getId() {
 		return id;
 	}
