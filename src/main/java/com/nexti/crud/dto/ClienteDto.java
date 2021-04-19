@@ -1,10 +1,5 @@
 package com.nexti.crud.dto;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.nexti.crud.entities.Cliente;
 
 public class ClienteDto {
@@ -12,18 +7,15 @@ public class ClienteDto {
 	private Long id;
 	private String nome;
 	private String cpf;
-	private LocalDate dataNascimento;
-	
-	private List<PedidoDto> pedidos = new ArrayList<>();
+	private String dataNascimento;
 	
 	public ClienteDto() { }
 
-	public ClienteDto(Long id, String nome, String cpf, LocalDate dataNascimento, List<PedidoDto> pedidos) {
+	public ClienteDto(Long id, String nome, String cpf, String dataNascimento) {
 		this.id = id;
 		this.nome = nome;
 		this.cpf = cpf;
 		this.dataNascimento = dataNascimento;
-		this.pedidos = pedidos;
 	}
 	
 	public ClienteDto(Cliente cliente) {
@@ -31,10 +23,6 @@ public class ClienteDto {
 		nome = cliente.getNome();
 		cpf = cliente.getCpf();
 		dataNascimento = cliente.getDataNascimento();
-		pedidos = cliente.getPedidos()
-				.stream()
-				.map(x -> new PedidoDto(x))
-				.collect(Collectors.toList());	// Preenchendo a lista de produtos. Copiar todos os produtos vindos da lsita de produtos da entidade Order e colocar dentro da lista de ProductsDTO
 	}
 
 	public Long getId() {
@@ -61,16 +49,12 @@ public class ClienteDto {
 		this.cpf = cpf;
 	}
 
-	public LocalDate getDataNascimento() {
+	public String getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(LocalDate dataNascimento) {
+	public void setDataNascimento(String dataNascimento) {
 		this.dataNascimento = dataNascimento;
-	}
-
-	public List<PedidoDto> getPedidos() {
-		return pedidos;
 	}	
 	
 }

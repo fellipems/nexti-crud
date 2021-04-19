@@ -1,30 +1,19 @@
 package com.nexti.crud.entities;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 
 @Entity
@@ -48,35 +37,23 @@ public class Cliente implements Serializable {
 	@NotEmpty(message = "CPF não pode ser vazio!")
 	private String cpf;
 
-	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	@JsonFormat(pattern = "dd/MM/yyyy") 
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	@JsonDeserialize(using = LocalDateDeserializer.class)  
-	@JsonSerialize(using = LocalDateSerializer.class)  
-	private LocalDate dataNascimento;
-	
-	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY) // um cliente tem um pedido mas um pedido tem vários cliente
-	@JsonIgnore
-	@JsonBackReference
-	private List<Pedido> pedidos = new ArrayList<>();
-	
-//	@ManyToMany
-//	@JoinTable(name = "tb_pedido_produto",
-//			joinColumns = @JoinColumn(name = "cliente_id"), // Join columns é a chave estrangeira que referencía a classe onde estou
-//			inverseJoinColumns = @JoinColumn(name = "pedido_id")) // a chave estrangeira que vai referenciar a outra tabela, correspondente ao tipo Produto
-//	private List<Pedido> pedidos = new ArrayList<>();
+	private String dataNascimento;
 
-	public Cliente () {
+	public Cliente () {	}
+
+	public Cliente(Long id, String nome, String cpf, String dataNascimento) {
 		
-	}
-
-	public Cliente(Long id, String nome, String cpf, LocalDate dataNascimento) {
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//        String data = dataNascimento;
+//        LocalDate localDate = LocalDate.parse(data, formatter);
+		
 		this.id = id;
 		this.nome = nome;
 		this.cpf = cpf;
 		this.dataNascimento = dataNascimento;
 	}
-	
 	
 	public Long getId() {
 		return id;
@@ -102,19 +79,11 @@ public class Cliente implements Serializable {
 		this.cpf = cpf;
 	}
 
-	public List<Pedido> getPedidos() {
-		return pedidos;
-	}
-
-	public void setPedidos(List<Pedido> pedidos) {
-		this.pedidos = pedidos;
-	}
-
-	public LocalDate getDataNascimento() {
+	public String getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(LocalDate dataNascimento) {
+	public void setDataNascimento(String dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 

@@ -227,6 +227,41 @@
 				}
 			],
 			"description": "Requisições para CRUD de Produtos"
+		},
+		{
+			"name": "Pedido",
+			"item": [
+				{
+					"name": "Cadastrar_pedido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"totalCompra\": 1577.85,\r\n    \"cliente\": { \"id\": 1 },\r\n    \"produtos\": [\r\n        {\r\n            \"id\": 1\r\n        },\r\n        {\r\n            \"id\": 2\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pedidos/cadastrar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedidos",
+								"cadastrar"
+							]
+						},
+						"description": "cadastra pedido com respectivos produtos e clientes"
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

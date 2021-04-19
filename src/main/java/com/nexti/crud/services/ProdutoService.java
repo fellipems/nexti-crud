@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nexti.crud.dto.PedidoDto;
 import com.nexti.crud.dto.ProdutoDto;
-import com.nexti.crud.entities.Pedido;
 import com.nexti.crud.entities.Produto;
 import com.nexti.crud.exceptions.ProdutoNaoEncontradoException;
 import com.nexti.crud.repositories.PedidoRepository;
@@ -37,10 +35,6 @@ public class ProdutoService {
 				produtoDto.getDescricao(),
 				produtoDto.getPreco(),
 				produtoDto.getQuantidade());
-		for (PedidoDto p : produtoDto.getPedidos()) {
-			Pedido pedido = pedidoRepository.getOne(p.getId());
-			produto.getPedidos().add(pedido);
-		}
 		produto = produtoRepository.save(produto);
 		return new ProdutoDto(produto);
 	}

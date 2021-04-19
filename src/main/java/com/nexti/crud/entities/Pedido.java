@@ -2,7 +2,6 @@ package com.nexti.crud.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -15,13 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Pedido implements Serializable {	// Serializable pra transformar a classe em diferentes tipos de Streams. como por exemplo salva no BD, enviada por JSON
@@ -39,26 +31,15 @@ public class Pedido implements Serializable {	// Serializable pra transformar a 
 	private Instant dataCompra;
 
 	@ManyToOne // um cliente tem vários pedidos
-	@JoinColumn(name = "cliente_id", nullable = false)
-	@JsonIgnore
-	@JsonManagedReference
+	@JoinColumn(name = "id_cliente", nullable = false)
 	private Cliente cliente;
 	
-	@Fetch(FetchMode.SELECT)
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JsonIgnore
-	@JsonManagedReference
+	@JoinColumn(name="id_produto")
 	@JoinTable(name = "tb_pedido_produto",
-		joinColumns = { @JoinColumn(name = "fk_pedido",           referencedColumnName = "id") },
-		inverseJoinColumns = { @JoinColumn(name = "fk_produto",                   referencedColumnName = "id") })
-	private Set<Produto> produtos = new HashSet<>();
-	
-//	@OneToOne
-//	@JoinColumn(name = "id", referencedColumnName = "id")
-//	private Cliente cliente;
-//	
-//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidos")
-//	private Set<Produto> produtos = new HashSet<>();  // conjunto. Pq set(não aceita repetição) e não list? não queremos admitir repetições do mesmo produto dentro do mesmo pedido
+		joinColumns = @JoinColumn(name = "id_cliente"),
+		inverseJoinColumns = @JoinColumn(name = "id_produto"))
+	private Set<Produto> produtos;	// Set não admite produtos repetidos
 	
 	public Pedido() {}
 	
@@ -129,5 +110,5 @@ public class Pedido implements Serializable {	// Serializable pra transformar a 
 			return false;
 		return true;
 	}
-		
+	
 }

@@ -1,21 +1,14 @@
 package com.nexti.crud.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Produto implements Serializable {
@@ -46,16 +39,6 @@ public class Produto implements Serializable {
 	@Column(nullable = false)
 	@NotNull(message = "Necessário informar uma quantidade.")
 	private double quantidade;
-	
-	@ManyToMany(mappedBy = "produtos", fetch = FetchType.LAZY)
-	@JsonIgnore
-	@JsonBackReference
-	private List<Pedido> pedidos = new ArrayList<>();
-	
-	
-//	@OneToMany
-//	@JoinColumn(name = "pedido_id", referencedColumnName="id")
-//	private List<Pedido> pedidos = new ArrayList<>();
 	
 	public Produto() {}
 	
@@ -114,14 +97,6 @@ public class Produto implements Serializable {
 
 	public void setQuantidade(double quantidade) {
 		this.quantidade = quantidade;
-	}
-
-	public List<Pedido> getPedidos() {
-		return pedidos;
-	}
-
-	public void setPedidos(List<Pedido> pedidos) {
-		this.pedidos = pedidos;
 	}
 
 	@Override

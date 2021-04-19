@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nexti.crud.dto.ClienteDto;
-import com.nexti.crud.dto.PedidoDto;
 import com.nexti.crud.entities.Cliente;
-import com.nexti.crud.entities.Pedido;
 import com.nexti.crud.repositories.ClienteRepository;
 import com.nexti.crud.repositories.PedidoRepository;
 
@@ -35,10 +33,6 @@ public class ClienteService {
 				clienteDto.getNome(), 
 				clienteDto.getCpf(), 
 				clienteDto.getDataNascimento());
-		for(PedidoDto p : clienteDto.getPedidos()) {
-			Pedido pedido = pedidoRepository.getOne(p.getId());
-			cliente.getPedidos().add(pedido);
-		}
 		cliente = clienteRepository.save(cliente);
 		return new ClienteDto(cliente);
 	}

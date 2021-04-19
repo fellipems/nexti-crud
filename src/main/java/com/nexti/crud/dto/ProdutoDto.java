@@ -1,9 +1,5 @@
 package com.nexti.crud.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.nexti.crud.entities.Produto;
 
 public class ProdutoDto {
@@ -14,19 +10,16 @@ public class ProdutoDto {
 	private String descricao;
 	private double preco;
 	private double quantidade;
-	private List<PedidoDto> pedidos = new ArrayList<>();
 
 	public ProdutoDto() { }
 
-	public ProdutoDto(Long id, String sku, String nome, String descricao, double preco, double quantidade,
-			List<PedidoDto> pedidos) {
+	public ProdutoDto(Long id, String sku, String nome, String descricao, double preco, double quantidade) {
 		this.id = id;
 		this.sku = sku;
 		this.nome = nome;
 		this.descricao = descricao;
 		this.preco = preco;
 		this.quantidade = quantidade;
-		this.pedidos = pedidos;
 	}
 
 	public ProdutoDto(Produto produto) {
@@ -36,10 +29,6 @@ public class ProdutoDto {
 		descricao = produto.getDescricao();
 		preco = produto.getPreco();
 		quantidade = produto.getQuantidade();
-		pedidos = produto.getPedidos()
-				.stream()
-				.map(x -> new PedidoDto(x))
-				.collect(Collectors.toList());
 	}
 
 	public Long getId() {
@@ -88,10 +77,6 @@ public class ProdutoDto {
 
 	public void setQuantidade(double quantidade) {
 		this.quantidade = quantidade;
-	}
-
-	public List<PedidoDto> getPedidos() {
-		return pedidos;
 	}
 
 }

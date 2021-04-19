@@ -19,12 +19,11 @@ public class PedidoDto {
 	
 	public PedidoDto() {}
 	
-	public PedidoDto(Long id, Long totalCompra, Instant dataCompra, Cliente cliente,  List<ProdutoDto> produtos) {
+	public PedidoDto(Long id, Long totalCompra, Instant dataCompra, Cliente cliente, List<ProdutoDto> produtos) {
 		this.id = id;
 		this.totalCompra = totalCompra;
 		this.dataCompra = dataCompra;
 		this.cliente = cliente;
-		this.produtos = produtos;
 	}
 	
 	public PedidoDto(Pedido pedido) {

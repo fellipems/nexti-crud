@@ -50,10 +50,6 @@ public class ClienteController {
     	}
     }
     
-    /**
-     * A data no banco de dados salva com um dia a menos do que foi digitado, mas no reponse vem a data correta. Ajustar depois
-     *
-     * */
 	@PostMapping(path = "/cadastrar")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<ClienteDto> cadastraCliente(@RequestBody @Valid ClienteDto dto) {
