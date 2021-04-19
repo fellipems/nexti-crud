@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nexti.crud.dto.ClienteDto;
 import com.nexti.crud.entities.Cliente;
 import com.nexti.crud.exceptions.ClienteNaoEncontradoException;
 import com.nexti.crud.services.ClienteService;
@@ -34,16 +35,16 @@ public class ClienteController {
     }
     
     @GetMapping
-    public ResponseEntity<List<Cliente>> getTodosClientes() {
-    	List<Cliente> clientes = clienteService.todosClientes();
+    public ResponseEntity<List<ClienteDto>> getTodosClientes() {
+    	List<ClienteDto> clientes = clienteService.todosClientes();
     	return new ResponseEntity<>(clientes, HttpStatus.OK);
     }
     
     @GetMapping("/procurar/{nome}")
-    public ResponseEntity<List<Cliente>> getClientePorNome(@PathVariable("nome") String nome) {
-    	List<Cliente> cliente = clienteService.buscaCliente(nome);
-    	if(!cliente.isEmpty()) {
-    		return new ResponseEntity<>(cliente, HttpStatus.OK);
+    public ResponseEntity<List<ClienteDto>> getClientePorNome(@PathVariable("nome") String nome) {
+    	List<ClienteDto> clienteDto = clienteService.buscaCliente(nome);
+    	if(!clienteDto.isEmpty()) {
+    		return new ResponseEntity<>(clienteDto, HttpStatus.OK);
     	} else {
     		throw new ClienteNaoEncontradoException("Nenhum usuário encontrado com nome " + nome);
     	}
@@ -55,9 +56,9 @@ public class ClienteController {
      * */
 	@PostMapping(path = "/cadastrar")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<Cliente> cadastraCliente(@RequestBody @Valid Cliente cliente) {
-		Cliente novoCliente = clienteService.adicionaCliente(cliente);
-		return new ResponseEntity<>(novoCliente, HttpStatus.CREATED);
+	public ResponseEntity<ClienteDto> cadastraCliente(@RequestBody @Valid ClienteDto dto) {
+		ClienteDto clienteDto = clienteService.cadastraCliente(dto);
+		return new ResponseEntity<>(clienteDto, HttpStatus.CREATED);
 	}
     
     @PutMapping("/atualizar")

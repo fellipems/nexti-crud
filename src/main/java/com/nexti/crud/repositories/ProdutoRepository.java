@@ -17,6 +17,6 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
 	List<Produto> findAllByOrderByNomeAsc();
 
-	Optional<List<Produto>> findProdutoByNomeContaining(String nome);
+	List<Produto> findProdutoByNomeContaining(String nome);
 
 }

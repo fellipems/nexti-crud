@@ -1,25 +1,31 @@
 package com.nexti.crud.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+
 
 @Entity
 public class Cliente implements Serializable {
@@ -41,28 +47,37 @@ public class Cliente implements Serializable {
 	@NotNull(message = "CPF não pode ser vazio!")
 	@NotEmpty(message = "CPF não pode ser vazio!")
 	private String cpf;
-	
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	@JsonFormat(pattern = "dd/MM/yyyy")
-	private Date dataNascimento;
 
-	@ManyToMany
-	@JoinTable(name = "tb_pedido_produto",
-			joinColumns = @JoinColumn(name = "cliente_id"), // Join columns é a chave estrangeira que referencía a classe onde estou
-			inverseJoinColumns = @JoinColumn(name = "pedido_id")) // a chave estrangeira que vai referenciar a outra tabela, correspondente ao tipo Produto
+	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy") 
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@JsonDeserialize(using = LocalDateDeserializer.class)  
+	@JsonSerialize(using = LocalDateSerializer.class)  
+	private LocalDate dataNascimento;
+	
+	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY) // um cliente tem um pedido mas um pedido tem vários cliente
+	@JsonIgnore
+	@JsonBackReference
 	private List<Pedido> pedidos = new ArrayList<>();
+	
+//	@ManyToMany
+//	@JoinTable(name = "tb_pedido_produto",
+//			joinColumns = @JoinColumn(name = "cliente_id"), // Join columns é a chave estrangeira que referencía a classe onde estou
+//			inverseJoinColumns = @JoinColumn(name = "pedido_id")) // a chave estrangeira que vai referenciar a outra tabela, correspondente ao tipo Produto
+//	private List<Pedido> pedidos = new ArrayList<>();
 
 	public Cliente () {
 		
 	}
 
-	public Cliente(String nome, String cpf, Date dataNascimento, List<Pedido> pedidos) {
+	public Cliente(Long id, String nome, String cpf, LocalDate dataNascimento) {
+		this.id = id;
 		this.nome = nome;
 		this.cpf = cpf;
 		this.dataNascimento = dataNascimento;
-		this.pedidos = pedidos;
 	}
-
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -95,12 +110,37 @@ public class Cliente implements Serializable {
 		this.pedidos = pedidos;
 	}
 
-	public Date getDataNascimento() {
+	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(Date dataNascimento) {
+	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cliente other = (Cliente) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
 }

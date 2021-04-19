@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.nexti.crud.dto.ProdutoDto;
-import com.nexti.crud.entities.Produto;
 import com.nexti.crud.exceptions.ProdutoNaoEncontradoException;
 import com.nexti.crud.services.ProdutoService;
 
@@ -40,16 +39,16 @@ public class ProdutoController {
 	}
 	
 	@GetMapping("/procurar/sku/{sku}")
-	public ResponseEntity<Produto> getProdutoSku(@PathVariable("sku") String sku) { // retorna um produto com o respectivo SKU
-		Produto produto = produtoService.buscaProdutoSku(sku);
-		return new ResponseEntity<>(produto, HttpStatus.OK);
+	public ResponseEntity<ProdutoDto> getProdutoSku(@PathVariable("sku") String sku) { // retorna um produto com o respectivo SKU
+		ProdutoDto produtoDto = produtoService.buscaProdutoSku(sku);
+		return new ResponseEntity<>(produtoDto, HttpStatus.OK);
 	}
 	
 	@GetMapping("/procurar/{nome}")	// traz produtos contendo o nome informado
-	public ResponseEntity<List<Produto>> getProdutosPorNome(@PathVariable("nome") String nome) { // retorna um produto com o respectivo SKU
-		List<Produto> produto = produtoService.buscaProdutoNome(nome);
-		if(!produto.isEmpty()) {
-    		return new ResponseEntity<>(produto, HttpStatus.OK);
+	public ResponseEntity<List<ProdutoDto>> getProdutosPorNome(@PathVariable("nome") String nome) { // retorna um produto com o respectivo SKU
+		List<ProdutoDto> produtoDto = produtoService.buscaProdutoNome(nome);
+		if(!produtoDto.isEmpty()) {
+    		return new ResponseEntity<>(produtoDto, HttpStatus.OK);
     	} else {
     		throw new ProdutoNaoEncontradoException("Nenhum produto encontrado com nome " + nome);
     	}

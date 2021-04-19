@@ -16,8 +16,7 @@ public class ProdutoDto {
 	private double quantidade;
 	private List<PedidoDto> pedidos = new ArrayList<>();
 
-	public ProdutoDto() {
-	}
+	public ProdutoDto() { }
 
 	public ProdutoDto(Long id, String sku, String nome, String descricao, double preco, double quantidade,
 			List<PedidoDto> pedidos) {

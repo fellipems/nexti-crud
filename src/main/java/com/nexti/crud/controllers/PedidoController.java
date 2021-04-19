@@ -32,7 +32,7 @@ public class PedidoController {
 		return ResponseEntity.ok().body(pedidoList);
 	}
 	
-	@PostMapping
+	@PostMapping("/cadastrar")
 	public ResponseEntity<PedidoDto> inserirPedidos(@RequestBody PedidoDto pedidoDto) {
 		pedidoDto = pedidoService.inserirPedido(pedidoDto);
 		URI uri = ServletUriComponentsBuilder

@@ -5,15 +5,23 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Pedido implements Serializable {	// Serializable pra transformar a classe em diferentes tipos de Streams. como por exemplo salva no BD, enviada por JSON
@@ -30,12 +38,27 @@ public class Pedido implements Serializable {	// Serializable pra transformar a 
 	@Column(nullable = false)
 	private Instant dataCompra;
 
-	@OneToOne
-	@JoinColumn(name = "id", referencedColumnName = "id")
+	@ManyToOne // um cliente tem vários pedidos
+	@JoinColumn(name = "cliente_id", nullable = false)
+	@JsonIgnore
+	@JsonManagedReference
 	private Cliente cliente;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidos")
-	private Set<Produto> produtos = new HashSet<>();  // conjunto. Pq set(não aceita repetição) e não list? não queremos admitir repetições do mesmo produto dentro do mesmo pedido
+	@Fetch(FetchMode.SELECT)
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JsonIgnore
+	@JsonManagedReference
+	@JoinTable(name = "tb_pedido_produto",
+		joinColumns = { @JoinColumn(name = "fk_pedido",           referencedColumnName = "id") },
+		inverseJoinColumns = { @JoinColumn(name = "fk_produto",                   referencedColumnName = "id") })
+	private Set<Produto> produtos = new HashSet<>();
+	
+//	@OneToOne
+//	@JoinColumn(name = "id", referencedColumnName = "id")
+//	private Cliente cliente;
+//	
+//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidos")
+//	private Set<Produto> produtos = new HashSet<>();  // conjunto. Pq set(não aceita repetição) e não list? não queremos admitir repetições do mesmo produto dentro do mesmo pedido
 	
 	public Pedido() {}
 	
@@ -82,4 +105,29 @@ public class Pedido implements Serializable {	// Serializable pra transformar a 
 		this.dataCompra = dataCompra;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pedido other = (Pedido) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+		
 }

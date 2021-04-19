@@ -12,7 +12,6 @@ import com.nexti.crud.dto.PedidoDto;
 import com.nexti.crud.dto.ProdutoDto;
 import com.nexti.crud.entities.Pedido;
 import com.nexti.crud.entities.Produto;
-import com.nexti.crud.exceptions.ClienteNaoEncontradoException;
 import com.nexti.crud.exceptions.ProdutoNaoEncontradoException;
 import com.nexti.crud.repositories.PedidoRepository;
 import com.nexti.crud.repositories.ProdutoRepository;
@@ -57,21 +56,25 @@ public class ProdutoService {
 		return produtoRepository.save(produto);
 	}
 	
-	public Produto buscaProdutoSku(String sku) {
+	public ProdutoDto buscaProdutoSku(String sku) {
 		
-		Optional<Produto> produto = produtoRepository.findProdutoBySku(sku);
+		Optional<Produto> resultado = produtoRepository.findProdutoBySku(sku);
 		
-		if(produto.isPresent()) {
-			return produto.get();
+		if(resultado.isPresent()) {
+			Produto produto = resultado.get();
+			return new ProdutoDto(produto);
 		} else {
-			throw new ProdutoNaoEncontradoException("Nenhum produto encontrado com SKU " + sku);
-		}
+			throw new ProdutoNaoEncontradoException("Nenhum produto com SKU " + sku + " encontrado");
+		}		
 	}
 	
-	public List<Produto> buscaProdutoNome(String nome) {
-		return produtoRepository.findProdutoByNomeContaining(nome)
-				.orElseThrow(() -> 
-				new ClienteNaoEncontradoException("Nenhum produto encontrado com nome " + nome));
+	public List<ProdutoDto> buscaProdutoNome(String nome) {
+		
+		List<Produto> produtos = produtoRepository.findProdutoByNomeContaining(nome);
+		
+		return produtos.stream()
+				.map(x -> new ProdutoDto(x))
+				.collect(Collectors.toList());
 	}
 	
 	@Transactional
