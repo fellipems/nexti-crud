@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.nexti.crud.dto.ProdutoDto;
+import com.nexti.crud.entities.Cliente;
 import com.nexti.crud.exceptions.ProdutoNaoEncontradoException;
 import com.nexti.crud.services.ProdutoService;
 
@@ -65,6 +67,13 @@ public class ProdutoController {
 				.buildAndExpand(produtoDto.getId()).toUri();	// chamada que fazemos para criar uma Uri que corresponde ao recurso que criamos
 		return ResponseEntity.created(uri).body(produtoDto);
 	}
+	
+	@PutMapping("/atualizar/{id}")
+    public ResponseEntity<ProdutoDto> atualizaCliente(@PathVariable("id") Long id, @RequestBody ProdutoDto produtoDto) {
+		
+		ProdutoDto produtoAtualizado = produtoService.atualizaProduto(id, produtoDto);
+    	return new ResponseEntity<>(produtoAtualizado, HttpStatus.OK);
+    }
 	
 	@DeleteMapping("/deletar/{id}")
 	public ResponseEntity<?> deletaProduto(@PathVariable("id") Long id) {

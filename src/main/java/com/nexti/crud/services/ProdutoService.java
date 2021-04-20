@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nexti.crud.dto.ClienteDto;
 import com.nexti.crud.dto.ProdutoDto;
+import com.nexti.crud.entities.Cliente;
 import com.nexti.crud.entities.Produto;
 import com.nexti.crud.exceptions.ProdutoNaoEncontradoException;
 import com.nexti.crud.repositories.PedidoRepository;
@@ -46,10 +48,6 @@ public class ProdutoService {
 				.collect(Collectors.toList());
 	}
 	
-	public Produto atualizaProduto(Produto produto) {
-		return produtoRepository.save(produto);
-	}
-	
 	public ProdutoDto buscaProdutoSku(String sku) {
 		
 		Optional<Produto> resultado = produtoRepository.findProdutoBySku(sku);
@@ -80,6 +78,25 @@ public class ProdutoService {
 			produtoRepository.deleteProdutoById(id);
 		} else {
 			throw new ProdutoNaoEncontradoException("Nenhum produto com id " + id + " encontrado");
+		}
+	}
+
+	public ProdutoDto atualizaProduto(Long id, ProdutoDto produtoDto) {
+		
+		Optional<Produto> retornoDb = produtoRepository.findById(id);
+		
+		if(retornoDb.isPresent()) {
+			Produto produtoAtualizado = retornoDb.get();
+			//produtoAtualizado.setId(produtoDto.getId());
+			produtoAtualizado.setDescricao(produtoDto.getDescricao());
+			produtoAtualizado.setNome(produtoDto.getNome());
+			produtoAtualizado.setPreco(produtoDto.getPreco());
+			produtoAtualizado.setQuantidade(produtoDto.getQuantidade());
+			produtoAtualizado.setSku(produtoDto.getSku());
+			produtoRepository.save(produtoAtualizado);
+			return new ProdutoDto(produtoAtualizado);
+		} else {
+			throw new ProdutoNaoEncontradoException("Produto de id " + id + " não encontrado!");
 		}
 	}
 	

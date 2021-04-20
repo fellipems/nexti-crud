@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: ProdutosPage
+  },
+  {
+    path: 'novo',
+    loadChildren: () => import('./produto-form/produto-form.module').then(m => m.ProdutoFormModule)
   }
 ]
 
