@@ -1,0 +1,32 @@
+.card-title {
+    display: flex;
+    justify-content: center;
+}
+
+table {
+    margin-top: 15px;
+    width: 100%;
+    text-align: center;
+    overflow:hidden;
+    border-collapse:separate;
+    border: solid #ccc 1px;
+    -webkit-border-radius: 20px;
+       -moz-border-radius: 20px;
+            border-radius: 20px;
+}
+
+table td {
+    color: #aaa;
+    background-color: white;
+    padding: 5px;
+    border: 1px solid #ddd;
+}
+
+table th{
+    color: white;
+    background-color: lightgrey;
+    font-weight: normal;
+    text-align: center;
+    padding: 5px;
+    font-size: 15px;
+}
